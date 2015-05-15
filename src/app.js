@@ -1,5 +1,6 @@
 'use strict';
 let m = require('mithril');
+window.m = m;
 
 var MyApp = {
     controller: function() {
@@ -8,9 +9,9 @@ var MyApp = {
         }
     },
     view: function(ctrl) {
-        return m("div", [
-            m("input", {oninput: m.withAttr("value", ctrl.temp), value: ctrl.temp()}), "K",
-            m("br"),
+        return m('div', [
+            m('input', {oninput: m.withAttr('value', ctrl.temp), value: ctrl.temp()}), 'K',
+            m('br'),
             m.component(TemperatureConverter, {value: ctrl.temp()})
         ]);
     }
@@ -31,9 +32,9 @@ var TemperatureConverter = {
     },
     view: function(ctrl, args) {
         return m('div', [
-            "celsius:", ctrl.kelvinToCelsius(args.value),
-            m("br"),
-            "fahrenheit:", ctrl.kelvinToFahrenheit(args.value),
+            'celsius:', ctrl.kelvinToCelsius(args.value),
+            m('br'),
+            'fahrenheit:', ctrl.kelvinToFahrenheit(args.value),
         ]);
     }
 };
