@@ -1,29 +1,32 @@
-m = require('mithril');
+m       = require 'mithril'
+h       = require './helpers'
+Counter = require './counter'
+
 
 MyApp = {
+    model: {
+        count: m.prop(0),
+        inc: ->
+            # h.L 'model inc called'
+            MyApp.model.count(MyApp.model.count() + 1)
+    }
     controller: ->
-        _ctrl = {}
-        _ctrl.now = m.prop(0)
-        _ctrl.update = setInterval ->
-            current = _ctrl.now()
-            if current < 1000
-                _ctrl.now(current + 1)
-            else
-                _ctrl.now(1) 
-            m.redraw()
-        , 1
-        
-        _ctrl
+        @count = MyApp.model.count
+        @inc = =>
+            # h.L 'ctrl inc called'
+            MyApp.model.inc()
+        @
     view: (ctrl) ->
+        # debugger;
         return m 'div', [
-            [0...100].map -> 
-                [
-                    m 'span', ctrl.now(),
-                    m 'br'
-                ]
             # m('input', {oninput: m.withAttr('value', ctrl.temp), value: ctrl.temp()}), 'K',
-            # m('br'),
-            # m.component(TemperatureConverter, {value: ctrl.temp()})
+            m('button', {
+                onclick: ctrl.inc
+                # , value: ctrl.count()
+            }, ctrl.count()),
+            m.component Counter, {
+                count: ctrl.count
+            }
         ]
 };
 # TemperatureConverter = {

@@ -1,41 +1,33 @@
 'use strict';
-let m = require('mithril');
-window.m = m;
+import m from 'mithril';
+import h from './helpers';
+import Counter from './counter'
 
-var MyApp = {
-    controller: function() {
-        return {
-            temp: m.prop(10) // kelvin
+
+let MyApp = {
+    model: {
+        count: m.prop(0),
+        inc: () => {
+            h.L('model inc called');
+            MyApp.model.count(MyApp.model.count() + 1);
         }
     },
-    view: function(ctrl) {
-        return m('div', [
-            m('input', {oninput: m.withAttr('value', ctrl.temp), value: ctrl.temp()}), 'K',
-            m('br'),
-            m.component(TemperatureConverter, {value: ctrl.temp()})
-        ]);
-    }
-};
-var TemperatureConverter = {
-    controller: function() {
-        //note how the controller does not handle the input arguments
-
-        //define some helper functions to be called from the view
-        return {
-            kelvinToCelsius: function(value) {
-                return value - 273.15
-            },
-            kelvinToFahrenheit: function(v) {
-                return (9 / 5 * (v - 273.15)) + 32
-            }
+    controller: function () {
+        this.count = MyApp.model.count
+        this.inc = () => {
+            h.L('ctrl inc called');
+            MyApp.model.inc();
         }
+        return this;
     },
-    view: function(ctrl, args) {
+    view: function (ctrl) {
         return m('div', [
-            'celsius:', ctrl.kelvinToCelsius(args.value),
-            m('br'),
-            'fahrenheit:', ctrl.kelvinToFahrenheit(args.value),
-        ]);
+            m('button', {
+                onclick: ctrl.inc
+            }, ctrl.count()),
+            m.component(Counter, {count: ctrl.count}),
+            m.component(Counter, {count: ctrl.count}),
+        ])
     }
 };
-m.mount(document.body, MyApp);
+m.mount(document.body, MyApp)

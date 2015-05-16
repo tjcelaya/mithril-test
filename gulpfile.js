@@ -17,11 +17,11 @@ var gutil = require('gulp-util');
 var path = {
         main: 'app.js',
         mainCoffee: 'app.coffee',
-        src: './src',
+        src: './src/',
         srcJs: './src/app.js',
         srcCoffee: './src/app.coffee',
-        bin: './bin',
-        binJs: './bin/app.js'
+        dist: './dist',
+        distJs: './dist/app.js'
     };
 
 gulp.task('build', ['clean'], function () {
@@ -31,27 +31,40 @@ gulp.task('build', ['clean'], function () {
     })
     .transform(babelify)
     .bundle()
+    .on('error', function(err){
+      console.log(err.message);
+      this.emit('end');
+    })
     .pipe(source(path.main))
     .pipe(buffer())
     // .pipe(sourcemaps.init({loadMaps: true}))
     //     .pipe(uglify())
     //     .on('error', gutil.log)
     // .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(path.bin))
+    .pipe(gulp.dest(path.dist))
     .pipe(livereload());
 });
 
-gulp.task('brew', function () {
+gulp.task('watch', function (){
+            livereload.listen();
+    gulp.watch([path.src + '/*'], ['build']);
+});
+
+gulp.task('brew', ['clean'], function () {
     return browserify({
         entries: path.srcCoffee,
+        extensions: ['.coffee'],
         debug: true
     })
     .transform(coffeeify)
     .bundle()
-    .on('error', gutil.log)
+    .on('error', function(err){
+      console.log(err.message);
+      this.emit('end');
+    })
     .pipe(source(path.main))
     .pipe(buffer())
-    .pipe(gulp.dest(path.bin))
+    .pipe(gulp.dest(path.dist))
     .pipe(livereload());
 });
 
@@ -64,4 +77,4 @@ gulp.task('clean', function () {
     del(path.dist + '/*');
 });
 
-gulp.task('default', ['brew', 'watchCoffee']);
+gulp.task('default', ['build', 'watch']);
