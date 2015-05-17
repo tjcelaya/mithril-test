@@ -17,7 +17,7 @@ export default Counter = {
             m('br'),
             'internal:', ctrl.count(),
             m('br'),
-            'external:', args.count(),
+            'external:', args.externalCount(),
         ])
     }
 }
