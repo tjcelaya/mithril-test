@@ -10,14 +10,18 @@ export default Counter = {
         return this;
     },
     view: function(ctrl, args) {
-        return m('div', [
-            m('button', {
-                onclick: ctrl.incInternal
-            }, ctrl.count()),
-            m('br'),
-            'internal:', ctrl.count(),
-            m('br'),
-            'external:', args.externalCount(),
+        return m('.row', [
+            m('.col-md-6',
+                m('button.btn.btn-success', {
+                    onclick: ctrl.incInternal
+                }, ctrl.count())
+            ),
+            m('.col-md-6', [
+                m('br'),
+                'internal:', ctrl.count(),
+                m('br'),
+                'external:', args.externalCount(),
+            ]),
         ])
     }
 }
