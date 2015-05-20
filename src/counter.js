@@ -1,12 +1,12 @@
 'use strict';
 import m from 'mithril';
-import { L } from './helpers';
+import { l, e } from './helpers';
 
-export default Counter = {
+let Counter = {
     controller: function(args) {
-        L('Counter ctrl instantiated');
+        l('Counter ctrl instantiated');
         this.count = m.prop(0);
-        this.incInternal = () => this.count(this.count() + 1)
+        this.incInternal = () => this.count(this.count() + 1);
         return this;
     },
     view: function(ctrl, args) {
@@ -17,11 +17,11 @@ export default Counter = {
                 }, ctrl.count())
             ),
             m('.col-md-6', [
-                m('br'),
                 'internal:', ctrl.count(),
                 m('br'),
                 'external:', args.externalCount(),
             ]),
         ])
     }
-}
+};
+export default Counter;

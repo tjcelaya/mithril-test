@@ -1,80 +1,85 @@
 'use strict';
 
-var gulp = require('gulp');
-var babel = require('gulp-babel');
-var babelify = require('babelify');
-var coffeeify = require('coffeeify');
+var debug = true;
 var browserify = require('browserify');
-var livereload = require('gulp-livereload');
-var source = require('vinyl-source-stream');
-var del = require('del');
+var babelify = require('babelify');
+var gulp = require('gulp');
 var embedlr = require("gulp-embedlr");
+var livereload = require('gulp-livereload');
 var uglify = require('gulp-uglify');
-var buffer = require('vinyl-buffer');
 var sourcemaps = require('gulp-sourcemaps');
-var gutil = require('gulp-util');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var del = require('del');
 
 var path = {
         main: 'app.js',
-        mainCoffee: 'app.coffee',
-        src: './src/',
-        srcJs: './src/app.js',
-        srcCoffee: './src/app.coffee',
-        dist: './dist',
-        distJs: './dist/app.js'
+        vendorBundle: 'vendor.js',
+        vendor: './vendor',
+        src: './src',
+        dist: './dist'
     };
 
-gulp.task('build', ['clean'], function () {
-    return browserify({
-        entries: path.srcJs,
-        debug: true
+var deps = [
+        'mithril',
+        'mithril.sugartags'
+    ];
+
+function errorHandler (err){
+  console.log(err.message);
+  this.emit('end');
+}
+
+function uglifyWithSourceMaps (stream) {
+    
+}
+
+gulp.task('build:vendor', ['clean'], function () {
+    var b = browserify({
+        require: deps,
+        debug: debug
     })
+    .bundle()
+    .on('error', errorHandler)
+    .pipe(source(path.vendorBundle))
+    .pipe(buffer());
+
+    if (!debug)
+        b.pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('./'));
+
+    b.pipe(gulp.dest(path.dist));
+});
+
+gulp.task('build:src', ['clean'], function () {
+    var b = browserify({
+        entries: path.src + '/' + path.main,
+        debug: debug
+    })
+    .external(deps)
     .transform(babelify)
     .bundle()
-    .on('error', function(err){
-      console.log(err.message);
-      this.emit('end');
-    })
+    .on('error', errorHandler)
     .pipe(source(path.main))
-    .pipe(buffer())
-    // .pipe(sourcemaps.init({loadMaps: true}))
-    //     .pipe(uglify())
-    //     .on('error', gutil.log)
-    // .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(path.dist))
+    .pipe(buffer());
+
+    if (!debug)
+        b.pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(uglify())
+        .pipe(sourcemaps.write('./'));
+
+    b.pipe(gulp.dest(path.dist))
     .pipe(livereload());
 });
 
 gulp.task('watch', function (){
-            livereload.listen();
-    gulp.watch([path.src + '/*'], ['build']);
-});
-
-gulp.task('brew', ['clean'], function () {
-    return browserify({
-        entries: path.srcCoffee,
-        extensions: ['.coffee'],
-        debug: true
-    })
-    .transform(coffeeify)
-    .bundle()
-    .on('error', function(err){
-      console.log(err.message);
-      this.emit('end');
-    })
-    .pipe(source(path.main))
-    .pipe(buffer())
-    .pipe(gulp.dest(path.dist))
-    .pipe(livereload());
-});
-
-gulp.task('watchCoffee', function (){
     livereload.listen();
-    gulp.watch([path.src + '/*'], ['brew']);
+    gulp.watch([path.src + '/*'], ['build:src']);
 });
 
 gulp.task('clean', function () {
-    del(path.dist + '/*');
+    del(path.dist + '/' + path.main);
 });
 
-gulp.task('default', ['build', 'watch']);
+gulp.task('default', ['build:src', 'watch']);

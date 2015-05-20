@@ -1,21 +1,13 @@
 'use strict';
 import m from 'mithril';
-import { L, E, toArray } from './helpers';
-import Counter from './counter'
-
-function containerize(...nodes) {
-    return m('.container', [
-        m('.row', [
-            m('.col-md-12', nodes)
-        ])
-    ]);
-}
+import { l, e, containerize } from './helpers';
+import Counter from './counter';
 
 let MyApp = {
     model: {
         count: m.prop(0),
         inc: () => {
-            L('model inc called');
+            l('model inc called');
             MyApp.model.count(MyApp.model.count() + 1);
         }
     },
@@ -26,13 +18,13 @@ let MyApp = {
         return {
             count: MyApp.model.count,
             inc: () => {
-                L('ctrl inc called');
+                l('ctrl inc called');
                 if (confirm('are you sure?')) MyApp.model.inc();
             }
         };
     },
     view: function (ctrl) {
-        return containerize(
+        return containerize(3,
             m('button.btn.btn-danger', {
                 onclick: ctrl.inc
             }, ctrl.count()),
