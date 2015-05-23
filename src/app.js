@@ -30,7 +30,6 @@ let MyApp = {
             }, ctrl.count()),
             m.component(Counter, { externalCount: ctrl.count }),
             m.component(Counter, { externalCount: ctrl.count }),
-            null,
             m('.modal', { })
         );
     }

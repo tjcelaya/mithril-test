@@ -1,6 +1,6 @@
 'use strict';
 import m from 'mithril';
-import { l, e } from './helpers';
+import { l, e, layout } from './helpers';
 
 let Counter = {
     controller: function(args) {
@@ -10,18 +10,18 @@ let Counter = {
         return this;
     },
     view: function(ctrl, args) {
-        return m('.row', [
-            m('.col-md-6',
+        let t = layout(
+            [
                 m('button.btn.btn-success', {
                     onclick: ctrl.incInternal
                 }, ctrl.count())
-            ),
-            m('.col-md-6', [
+            ],[
                 'internal:', ctrl.count(),
                 m('br'),
                 'external:', args.externalCount(),
-            ]),
-        ])
+            ]
+        );
+        return t;
     }
 };
 export default Counter;

@@ -30,10 +30,6 @@ function errorHandler (err){
   this.emit('end');
 }
 
-function uglifyWithSourceMaps (stream) {
-    
-}
-
 gulp.task('build:vendor', ['clean'], function () {
     var b = browserify({
         require: deps,

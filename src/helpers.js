@@ -1,8 +1,8 @@
+'use strict';
 import m from 'mithril';
 
-export const l = console.log.bind(console);
-export const e = console.error.bind(console);
-// export const toArray = [].slice;
+export let l = console.log.bind(console);
+export let e = console.error.bind(console);
 
 export function containerize(columns, ...nodes) {
     return m('.container', [
@@ -12,3 +12,13 @@ export function containerize(columns, ...nodes) {
     ]);
 }
 
+export let row = (any) => m('.row', any);
+
+export let cols = (...nodes) =>
+  nodes.map( n =>
+    m(`.col-xs-${ Math.floor(12 / nodes.length) }`, n));
+
+export let layout = (...nodes) =>
+  row(cols(...nodes));
+
+window.cols = cols;
