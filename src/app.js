@@ -1,7 +1,9 @@
 'use strict';
 import m from 'mithril';
+require('mithril-bootstrap');
 import { l, e, containerize } from './helpers';
 import Counter from './counter';
+import Cart from './cart'
 
 let MyApp = {
     model: {
@@ -23,15 +25,15 @@ let MyApp = {
             }
         };
     },
-    view: function (ctrl) {
-        return containerize(3,
+    view: (ctrl) =>
+        containerize(3,
             m('button.btn.btn-danger', {
                 onclick: ctrl.inc
             }, ctrl.count()),
             m.component(Counter, { externalCount: ctrl.count }),
             m.component(Counter, { externalCount: ctrl.count }),
-            m('.modal', { })
-        );
-    }
+            m.component(new Modalizer),
+            null
+        )
 };
 m.mount(document.body, MyApp)

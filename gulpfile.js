@@ -3,6 +3,7 @@
 var debug = true;
 var browserify = require('browserify');
 var babelify = require('babelify');
+var browserifyShim = require('browserify-shim');
 var gulp = require('gulp');
 var embedlr = require("gulp-embedlr");
 var livereload = require('gulp-livereload');
@@ -21,8 +22,8 @@ var path = {
     };
 
 var deps = [
-        'mithril',
-        'mithril.sugartags'
+        'mithril-bootstrap',
+        'mithril'
     ];
 
 function errorHandler (err){
@@ -35,6 +36,7 @@ gulp.task('build:vendor', ['clean'], function () {
         require: deps,
         debug: debug
     })
+    .transform(browserifyShim)
     .bundle()
     .on('error', errorHandler)
     .pipe(source(path.vendorBundle))
@@ -78,4 +80,4 @@ gulp.task('clean', function () {
     del(path.dist + '/' + path.main);
 });
 
-gulp.task('default', ['build:src', 'watch']);
+gulp.task('default', ['build:vendor', 'build:src', 'watch']);
