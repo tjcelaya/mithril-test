@@ -1,1 +1,22 @@
-[]
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Farts",
+      "description": "Smelly",
+      "price": 3
+    },
+    {
+      "id": 2,
+      "title": "dinosaurs",
+      "description": "big lizards",
+      "price": 40
+    },
+    {
+      "title": "thing",
+      "description": "words",
+      "price": 3,
+      "id": 3
+    }
+  ]
+}

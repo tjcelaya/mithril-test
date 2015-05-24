@@ -1,7 +1,7 @@
 'use strict';
 import m from 'mithril';
 
-export default class Modalizer {
+export default class Alerter {
   controller() {
     var ctrl = this;
     ctrl.alerts = [{

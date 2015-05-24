@@ -15,3 +15,8 @@ export let cols = (...nodes) =>
 
 export let layoutRow = (...nodes) =>
   row(cols(...nodes));
+
+export let col = (width, ...nodes) => 
+  m(`.col-xs-${width}`, nodes)
+
+window.col = col
