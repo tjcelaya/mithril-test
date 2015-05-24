@@ -1,16 +1,14 @@
 'use strict';
 import m from 'mithril';
-import h from 'helpers';
+import * as h from './helpers';
 
-export default class ProductListing {
-    constructor() {
-        h.l('initialize ProductListing');
-        h.l('pl got args:', arguments);
-    }
-    controller(args) {
+let ProductListing = {
+    controller: (args) => {
         h.l('pl.ctrl got args:', args);
-    }
-    view(ctrl, args) {
-        return args.productsInCart.map(p => m('p', p));
+    },
+    view: (ctrl, args) => {
+        return h.layoutRow(args.purchases.map(p => m('p', p)));
     }
 }
+
+export default ProductListing;

@@ -36,6 +36,7 @@ gulp.task('build:vendor', ['clean'], function () {
         require: deps,
         debug: debug
     })
+    .require(require.resolve('./node_modules/mithril-bootstrap'), { expose: 'Mithril' })
     .transform(browserifyShim)
     .bundle()
     .on('error', errorHandler)

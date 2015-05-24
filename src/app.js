@@ -1,13 +1,13 @@
 'use strict';
 import m from 'mithril';
-require('mithril-bootstrap');
-import { l, e, containerize } from './helpers';
+import { col, contain } from './helpers';
 import Counter from './counter';
 import Cart from './cart';
+import ProductListing from './product-listing.js';
 
 let MyApp = {
     model: {
-        products: () => m.request({ url: 'http://localhost:3000/products', method: 'GET', background: true, initialValue: []})
+        products: () => m.request({ url: 'http://localhost:3000/products', method: 'GET' })
     },
     vm: {
         confirming: m.prop(false)
@@ -18,9 +18,10 @@ let MyApp = {
         };
     },
     view: (ctrl) => {
-        return containerize(3,
-            m('p', JSON.stringify(ctrl.getProducts()))
+        return contain(
+            col(8, m.component(ProductListing, { purchases: ['array', 'of', 'things'] })),
+            col(4, m.component(Cart, { purchases: ['array', 'of', 'things'] }))
         )
     }
 };
-m.mount(document.body, MyApp)
+m.mount(document.getElementById('app'), MyApp)
