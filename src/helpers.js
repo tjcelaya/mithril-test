@@ -24,3 +24,4 @@ export let layoutSpread = (...nodes) => {
     return layoutCol(nodes.length, ...nodes);
 };
 
+export const MISSING_IMAGE = '/img/placeholder_small.png';

@@ -15,6 +15,7 @@ var del = require('del');
 var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
+var spawn = require('child_process').spawn;
 
 var path = {
         main: 'app.js',
@@ -53,7 +54,7 @@ gulp.task('build:vendor', ['clean'], function () {
     b.pipe(gulp.dest(path.dist));
 });
 
-gulp.task('build:src', ['clean'], function () {
+gulp.task('build:src', function () {
     var b = browserify({
         entries: path.src + '/' + path.main,
         debug: debug
@@ -87,11 +88,19 @@ gulp.task('build:css', function () {
 
 gulp.task('watch', function (){
     livereload.listen();
-    gulp.watch([path.src + '/*'], ['build:css', 'build:src']);
+    gulp.watch([path.src + '/*'], ['clean', 'build:css', 'build:src']);
 });
 
 gulp.task('clean', function () {
     del(path.dist + '/' + path.main);
 });
 
-gulp.task('default', ['build:vendor', 'build:css', 'build:src', 'watch']);
+gulp.task('server', function (cb) {
+    var server = spawn('./server.js');
+    server.stdout.on('data', function (data) { console.log(data.toString().trim()); });
+    server.stderr.on('data', function (data) { console.error(data.toString().trim()); });
+    server.on('error', function(err) { throw err });
+    server.on('exit', function (data) { console.log(data.toString().trim()); });
+});
+
+gulp.task('default', ['server', 'build:vendor', 'build:css', 'build:src', 'watch']);

@@ -2,13 +2,16 @@
 //     @extend .col-xs-4
 
 .product-listing
-    display: flex
-    flex-wrap: wrap
-    flex-direction: row
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
 
     .product
         flex-basis: 30%
-        flex-grow: 1
+        flex-grow: 0
         flex-shrink: 0
         height: 30%
 
@@ -16,7 +19,7 @@
             height: 10em
 
     .product img
-        padding-right: 0.1em
+        margin-right: 1em
 
     .product .purchase
         background-color: #fff

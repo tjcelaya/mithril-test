@@ -2,7 +2,8 @@
   "name": "js",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
+  "private": true,
   "scripts": {
     "build:vendor": "browserify -r mithril -g uglifyify > ./dist/vendor.js",
     "build:src": "browserify ./src/app.js -x mithril -x mithril.sugartags -t babelify -t uglifyify > ./dist/app.js",
@@ -38,9 +39,13 @@
     "gulp-sass": "^2.0.1",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
+    "json-server": "^0.7.10",
     "mithril": "^0.2.0",
     "mithril-bootstrap": "tjcelaya/mithril-bootstrap",
     "mithril.sugartags": "0.0.8",
+    "passport": "^0.2.2",
+    "passport-http": "^0.2.2",
+    "passport-local": "^1.0.0",
     "primus": "^3.0.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
