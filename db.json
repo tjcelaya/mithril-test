@@ -3,20 +3,37 @@
     {
       "id": 1,
       "title": "Farts",
-      "description": "Smelly",
+      "description": "Smelly SmellySmelly SmellySmelly SmellySmelly SmellySmelly SmellySmelly SmellySmelly Smelly",
+      "image": "img/HeavyMii.png",
       "price": 3
     },
     {
-      "id": 2,
-      "title": "dinosaurs",
-      "description": "big lizards",
+      "id": 3,
+      "title": "dinos",
+      "description": "big lizardslizards big lizardslizards big lizardslizards big lizardslizardsbig lizardslizards",
+      "image": "img/Morton.png",
       "price": 40
     },
     {
+      "id": 4,
+      "title": "derps",
+      "description": "big lizardslizards big lizardslizards big lizardslizards big lizardslizardsbig lizardslizards",
+      "image": "img/Morton.png",
+      "price": 40
+    },
+    {
+      "id": 5,
+      "title": "cats",
+      "description": "big lizardslizards big lizardslizards big lizardslizards big lizardslizardsbig lizardslizards",
+      "image": "img/Morton.png",
+      "price": 40
+    },
+    {
+      "id": 6,
       "title": "thing",
-      "description": "words",
-      "price": 3,
-      "id": 3
+      "description": "wordswordswords words wordswords words wordswordswords words wordswords words",
+      "image": "img/HeavyMii.png",
+      "price": 3
     }
   ]
 }

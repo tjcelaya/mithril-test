@@ -1,14 +1,24 @@
 'use strict';
 import m from 'mithril';
-import * as h from './helpers';
+import { l, layoutCol, row, cols } from './helpers';
 
 let ProductListing = {
-    controller: (args) => {
-        h.l('pl.ctrl got args:', args);
+    controller: function (args) {
+        l('pl.ctrl got args:', args);
     },
-    view: (ctrl, args) => {
-        return h.layoutRow(args.purchases.map(p => m('p', p)));
+    view: (ctrl, args) => { 
+        return m('.product-listing',
+            // layoutCol(3, ...
+            args.products().map(p => {
+                return m('.product',
+                    m('h1', p.title),
+                    m('img.pull-left', { src: p.image }),
+                    m('p', p.description),
+                    m('button.btn.btn-success.add-to-cart', {
+                        onclick: args.addToCart.bind(null, p)
+                    }, 'Add to Cart'));
+        }));
     }
-}
+};
 
 export default ProductListing;

@@ -6,7 +6,7 @@
   "scripts": {
     "build:vendor": "browserify -r mithril -g uglifyify > ./dist/vendor.js",
     "build:src": "browserify ./src/app.js -x mithril -x mithril.sugartags -t babelify -t uglifyify > ./dist/app.js",
-    "start": "python -m SimpleHTTPServer & gulp & wait"
+    "start:db": "json-server -w db.json"
   },
   "author": "",
   "license": "ISC",
@@ -14,12 +14,13 @@
     "mithril": "./node_modules/mithril/mithril.js"
   },
   "browserify": {
-     "transform": [
-         "browserify-shim"
-     ]
- },
+    "transform": [
+      "babelify",
+      "browserify-shim"
+    ]
+  },
   "browserify-shim": {
-    "mithril": "Mithril"
+    "mithril": "m"
   },
   "dependencies": {
     "babel": "^5.4.2",
@@ -27,14 +28,20 @@
     "browserify": "^10.2.0",
     "browserify-shim": "^3.8.6",
     "del": "^1.1.1",
+    "express": "^4.12.4",
+    "font-awesome": "^4.3.0",
     "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.3.0",
+    "gulp-concat": "^2.5.2",
     "gulp-embedlr": "^0.5.2",
     "gulp-livereload": "^3.8.0",
+    "gulp-sass": "^2.0.1",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
     "mithril": "^0.2.0",
     "mithril-bootstrap": "tjcelaya/mithril-bootstrap",
     "mithril.sugartags": "0.0.8",
+    "primus": "^3.0.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }

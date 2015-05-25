@@ -22,4 +22,5 @@ let Counter = {
             ]
         )
 };
+
 export default Counter;

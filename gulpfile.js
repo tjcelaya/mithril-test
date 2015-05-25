@@ -12,13 +12,16 @@ var sourcemaps = require('gulp-sourcemaps');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var del = require('del');
+var autoprefixer = require('gulp-autoprefixer');
+var concat = require('gulp-concat');
+var sass = require('gulp-sass');
 
 var path = {
         main: 'app.js',
         vendorBundle: 'vendor.js',
         vendor: './vendor',
         src: './src',
-        dist: './dist'
+        dist: './public/dist'
     };
 
 var deps = [
@@ -36,8 +39,7 @@ gulp.task('build:vendor', ['clean'], function () {
         require: deps,
         debug: debug
     })
-    .require(require.resolve('./node_modules/mithril-bootstrap'), { expose: 'Mithril' })
-    .transform(browserifyShim)
+    .require(require.resolve('mithril'), { expose: 'm' })
     .bundle()
     .on('error', errorHandler)
     .pipe(source(path.vendorBundle))
@@ -72,13 +74,24 @@ gulp.task('build:src', ['clean'], function () {
     .pipe(livereload());
 });
 
+gulp.task('build:css', function () {
+    return gulp.src('src/*.sass')
+        .pipe(sourcemaps.init())
+        .pipe(sass().on('error', sass.logError))
+        // .pipe(autoprefixer())
+        .pipe(concat('style.css'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(path.dist))
+        .pipe(livereload());
+});
+
 gulp.task('watch', function (){
     livereload.listen();
-    gulp.watch([path.src + '/*'], ['build:src']);
+    gulp.watch([path.src + '/*'], ['build:css', 'build:src']);
 });
 
 gulp.task('clean', function () {
     del(path.dist + '/' + path.main);
 });
 
-gulp.task('default', ['build:vendor', 'build:src', 'watch']);
+gulp.task('default', ['build:vendor', 'build:css', 'build:src', 'watch']);

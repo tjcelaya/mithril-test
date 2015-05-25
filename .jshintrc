@@ -1,0 +1,10 @@
+{
+    "globalstrict": true,
+    "esnext": true,
+    "debug": true,
+    "globals": {
+        "console": false,
+        "window": false,
+        "require": false
+    }
+}
