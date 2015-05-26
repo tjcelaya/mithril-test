@@ -1,6 +1,6 @@
 'use strict';
 
-var debug = true;
+var debug = false;
 var browserify = require('browserify');
 var babelify = require('babelify');
 var browserifyShim = require('browserify-shim');
@@ -103,4 +103,10 @@ gulp.task('server', function (cb) {
     server.on('exit', function (data) { console.log(data.toString().trim()); });
 });
 
-gulp.task('default', ['server', 'build:vendor', 'build:css', 'build:src', 'watch']);
+gulp.task('default', [
+    // 'server',
+    'build:vendor',
+    'build:css',
+    'build:src',
+    'watch'
+]);

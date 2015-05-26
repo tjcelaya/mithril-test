@@ -1,6 +1,5 @@
 'use strict';
 import m from 'mithril';
-window.m = m;
 
 export let l = console.log.bind(console);
 export let e = console.error.bind(console);
