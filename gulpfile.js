@@ -1,6 +1,6 @@
 'use strict';
 
-var debug = false;
+var debug = true;
 var browserify = require('browserify');
 var babelify = require('babelify');
 var browserifyShim = require('browserify-shim');

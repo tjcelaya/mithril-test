@@ -13,7 +13,7 @@
   "license": "ISC",
   "browser": {
     "mithril": "./node_modules/mithril/mithril.js",
-    "./src/load": "./src/load/client.js"
+    "./src/load/index.js": "./src/load/client.js"
   },
   "browserify": {
     "transform": [
@@ -36,6 +36,7 @@
     "del": "^1.1.1",
     "express": "^4.12.4",
     "express-domain": "^1.0.5",
+    "express-ls-routes": "^1.0.2",
     "font-awesome": "^4.3.0",
     "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.3.0",
@@ -47,6 +48,7 @@
     "gulp-uglify": "^1.2.0",
     "json-server": "^0.7.10",
     "knex": "^0.8.6",
+    "lodash": "^3.9.3",
     "mariasql": "^0.1.23",
     "mithril": "^0.2.0",
     "mithril-bootstrap": "tjcelaya/mithril-bootstrap",
